@@ -1,0 +1,45 @@
+{
+  "name": "koa-router2",
+  "version": "0.0.0",
+  "description": "Yet another router for Koa 2",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha",
+    "build": "babel src -o index.js",
+    "check": "eslint src/ test/",
+    "preversion": "npm run check && npm test",
+    "version": "npm run build && git add -A",
+    "postversion": "git push && git push --tags"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/inca/koa-router2.git"
+  },
+  "keywords": [
+    "koa",
+    "router"
+  ],
+  "author": "Boris Okunskiy",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/inca/koa-router2/issues"
+  },
+  "homepage": "https://github.com/inca/koa-router2#readme",
+  "dependencies": {
+    "koa": "^2.0.0",
+    "koa-compose": "^3.1.0",
+    "koa-mount": "^2.0.0",
+    "methods": "^1.1.2",
+    "path-to-regexp": "^1.5.3"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.11.4",
+    "babel-core": "^6.11.4",
+    "babel-eslint": "^6.1.2",
+    "babel-preset-nodejs6": "^1.0.0",
+    "babel-register": "^6.11.6",
+    "eslint": "^3.2.2",
+    "mocha": "^3.0.0",
+    "supertest": "^2.0.0"
+  }
+}
