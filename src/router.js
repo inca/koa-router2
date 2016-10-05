@@ -1,10 +1,12 @@
-import Koa from 'koa';
-import pathToRegexp from 'path-to-regexp';
-import methods from 'methods';
-import mount from 'koa-mount';
-import compose from 'koa-compose';
+'use strict';
 
-export default class Router {
+const Koa = require('koa');
+const pathToRegexp = require('path-to-regexp');
+const methods = require('methods');
+const mount = require('koa-mount');
+const compose = require('koa-compose');
+
+module.exports = class Router {
 
   constructor() {
     this.app = new Koa();
@@ -17,7 +19,7 @@ export default class Router {
 
   _createRoute(method) {
     return function(path, ...handlers) {
-      this.app.use(async function (ctx, next) {
+      this.app.use((ctx, next) => {
         if (!matchMethod(ctx, method)) {
           return next();
         }
@@ -70,7 +72,7 @@ function createPathHandler(path, handler, options) {
   options = options || {};
   const keys = [];
   const re = pathToRegexp(path, keys, options);
-  return async function (ctx, next) {
+  return function(ctx, next) {
     const m = re.exec(ctx.path);
     if (m) {
       const args = m.slice(1).map(decode);
@@ -82,7 +84,7 @@ function createPathHandler(path, handler, options) {
       keys.forEach((key, i) => {
         ctx.params[key.name] = args[i];
       });
-      return await handler(ctx, next);
+      return handler(ctx, next);
     }
     return next();
   }
