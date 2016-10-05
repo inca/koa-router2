@@ -115,14 +115,17 @@ describe('Router', function() {
     router.use(async (ctx, next) => {
       ctx.body = '1';
       await next();
+      ctx.body += '1';
     });
     router.use(async (ctx, next) => {
       ctx.body += '2';
       await next();
+      ctx.body += '2';
     });
     router.use(async (ctx, next) => {
       ctx.body += '3';
       await next();
+      ctx.body += '3';
     });
     router.get('/', async ctx => {
       ctx.body += '4';
@@ -131,7 +134,7 @@ describe('Router', function() {
     it('execute .use middleware in order', done => {
       request(router.app.listen())
         .get('/')
-        .expect('1234', done);
+        .expect('1234321', done);
     });
 
   });
