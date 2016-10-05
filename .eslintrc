@@ -1,13 +1,10 @@
 {
   "env": {
     "es6": true,
-    "node": false,
+    "node": true,
     "browser": false
   },
   "parser": "babel-eslint",
-  "parserOptions": {
-    "sourceType": "module"
-  },
   "rules": {
     "brace-style": [2, "1tbs", { "allowSingleLine": true }],
     "camelcase": 2,

@@ -1,5 +1,7 @@
-import request from 'supertest';
-import Router from '../src/router';
+'use strict';
+
+const request = require('supertest');
+const Router = require('../src/router');
 
 describe('Router', function() {
 
