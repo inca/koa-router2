@@ -1,13 +1,6 @@
 {
-  "globals": {
-    "expect": false,
-    "it": false,
-    "describe": false,
-    "context": false,
-    "before": false,
-    "beforeEach": false,
-    "after": false,
-    "afterEach": false
+  "env": {
+    "mocha": true
   },
   "rules": {
     "max-nested-callbacks": 0
