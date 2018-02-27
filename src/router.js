@@ -6,27 +6,10 @@ const mount = require('koa-mount');
 const compose = require('koa-compose');
 const { METHODS } = require('http');
 
-module.exports = class Router {
+class Router {
 
   constructor() {
     this.app = new Koa();
-    for (const METHOD of METHODS) {
-      this[METHOD.toLowerCase()] = this._createRoute(METHOD);
-    }
-    this.del = this.delete;
-    this.all = this._createRoute();
-  }
-
-  _createRoute(method) {
-    return function(path, ...handlers) {
-      this.app.use((ctx, next) => {
-        if (!matchMethod(ctx, method)) {
-          return next();
-        }
-        const handler = compose(handlers);
-        return createPathHandler(path, handler)(ctx, next);
-      });
-    };
   }
 
   /**
@@ -54,6 +37,43 @@ module.exports = class Router {
   }
 
 };
+
+module.exports = Router;
+
+for (const METHOD of METHODS) {
+  Object.defineProperty(Router.prototype, METHOD.toLowerCase(), {
+    value: createRoute(METHOD),
+    writable: true,
+    enumerable: false,
+    configurable: true
+  })
+}
+
+Object.defineProperty(Router.prototype, 'del', {
+  value: Router.prototype.delete,
+  writable: true,
+  enumerable: false,
+  configurable: true
+});
+
+Object.defineProperty(Router.prototype, 'all', {
+  value: createRoute(),
+  writable: true,
+  enumerable: false,
+  configurable: true
+});
+
+function createRoute(method) {
+  return function(path, ...handlers) {
+    this.app.use((ctx, next) => {
+      if (!matchMethod(ctx, method)) {
+        return next();
+      }
+      const handler = compose(handlers);
+      return createPathHandler(path, handler)(ctx, next);
+    });
+  };
+}
 
 function convertRouter(handler) {
   if (!handler) {
