@@ -1,10 +1,10 @@
 {
-  "env": {
-    "es6": true,
-    "node": true,
-    "browser": false
+  "parserOptions": {
+    "ecmaVersion": 2017
   },
-  "parser": "babel-eslint",
+  "env": {
+    "node": true
+  },
   "rules": {
     "brace-style": [2, "1tbs", { "allowSingleLine": true }],
     "camelcase": 2,

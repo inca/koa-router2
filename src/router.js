@@ -2,17 +2,17 @@
 
 const Koa = require('koa');
 const pathToRegexp = require('path-to-regexp');
-const methods = require('methods');
 const mount = require('koa-mount');
 const compose = require('koa-compose');
+const { METHODS } = require('http');
 
 module.exports = class Router {
 
   constructor() {
     this.app = new Koa();
-    methods.forEach(method => {
-      this[method] = this._createRoute(method);
-    });
+    for (const METHOD of METHODS) {
+      this[METHOD.toLowerCase()] = this._createRoute(METHOD);
+    }
     this.del = this.delete;
     this.all = this._createRoute();
   }
@@ -98,7 +98,6 @@ function matchMethod(ctx, method) {
   if (!method) {
     return true;
   }
-  method = method.toUpperCase();
   return ctx.method === method ||
     method === 'GET' && ctx.method === 'HEAD' ||
     false;
