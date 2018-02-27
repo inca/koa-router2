@@ -1,6 +1,6 @@
 {
   "name": "koa-router2",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Yet another router for Koa 2",
   "main": "src/router.js",
   "scripts": {
