@@ -19,12 +19,13 @@ module.exports = class Router {
 
   _createRoute(method) {
     return function(path, ...handlers) {
+      const handler = handlers.length > 1 ? compose(handlers) : handlers[0];
+      const pathHandler = createPathHandler(path, handler);
       this.app.use((ctx, next) => {
         if (!matchMethod(ctx, method)) {
           return next();
         }
-        const handler = compose(handlers);
-        return createPathHandler(path, handler)(ctx, next);
+        return pathHandler(ctx, next);
       });
     };
   }
