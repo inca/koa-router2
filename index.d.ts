@@ -8,7 +8,7 @@ declare class Router {
 
     routes(): Koa.Middleware;
 
-    mount(prefix: string, Router): void;
+    mount(prefix: string, router: Router): void;
     acl(prefix: string, ...handlers: Koa.Middleware[]): void;
     bind(prefix: string, ...handlers: Koa.Middleware[]): void;
     checkout(prefix: string, ...handlers: Koa.Middleware[]): void;
